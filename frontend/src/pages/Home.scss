@@ -1,0 +1,52 @@
+.Home_container {
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Home_Add {
+  display: flex;
+  margin-top: 120px;
+  background: rgb(179, 197, 245);
+  padding: 40px 80px;
+  border-radius: 10px 10px 0 0;
+
+  input {
+    background: white;
+    color: black;
+    border: none;
+    padding: 10px;
+    border: 1px rgb(137, 105, 105) solid;
+  }
+
+  .Home_task-input {
+    input {
+      height: 40px;
+      width: 300px;
+      font-size: 16px;
+      border-right: none;
+    }
+
+    input:focus {
+      outline: none;
+    }
+  }
+
+  .Home_task-post {
+    border-radius: 6px;
+    input {
+      height: 40px;
+      width: 80px;
+      background: #36d9b6;
+      cursor: pointer;
+      border-radius: 0 6px 6px 0;
+    }
+  }
+}
+
+
+.Home_List {
+    width: 540px;
+}
