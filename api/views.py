@@ -8,7 +8,7 @@ from .models import Task
 
 # Create your views here.
 
-
+# Links overview
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
@@ -21,8 +21,6 @@ def apiOverview(request):
     return Response(api_urls)
 
 # GET
-
-
 @api_view(['GET'])
 def taskList(request):
     tasks = Task.objects.all()
@@ -30,8 +28,6 @@ def taskList(request):
     return Response(serializer.data)
 
 # GET with id
-
-
 @api_view(['GET'])
 def taskDetail(request, pk):
     task = Task.objects.get(id=pk)
@@ -39,8 +35,6 @@ def taskDetail(request, pk):
     return Response(serializer.data)
 
 # POST
-
-
 @api_view(['POST'])
 def taskCreate(request):
     serializer = TaskSerializer(data=request.data)
@@ -48,7 +42,6 @@ def taskCreate(request):
         serializer.save()
 
     return Response(serializer.data)
-
 
 # UPDATE
 @api_view(['POST'])
