@@ -2,6 +2,8 @@ import React from "react";
 import "./Home.scss";
 import { useQuery } from "@tanstack/react-query";
 
+import {BiEditAlt} from 'react-icons/bi'
+import {AiOutlineDelete} from 'react-icons/ai'
 const fetcher = () => {
   return fetch(`http://127.0.0.1:8000/api/task-list/`).then((res) =>
     res.json()
@@ -27,15 +29,15 @@ function Home() {
       </div>
       <div className="Home_List">
         {data.map((task) => {
-            console.log(task)
+          console.log(task);
           return (
             <div className="Home_list-tasks" key={task.id}>
               <div className="Home_list_tasks-title">
                 <p>{task.title}</p>
               </div>
               <div className="Home_list_tasks-button">
-                <p className="Home_list_tasks-edit">Edit</p>
-                <p className="Home_list_tasks-delete"> Delete </p>
+                <p className="Home_list_tasks-edit"><BiEditAlt/></p>
+                <p className="Home_list_tasks-delete"> <AiOutlineDelete/> </p>
               </div>
             </div>
           );

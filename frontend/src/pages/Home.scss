@@ -51,6 +51,8 @@
 .Home_List {
   width: 540px;
   background: transparent;
+  color: black;
+  box-shadow: 0px 20px 50px rgb(205, 44, 44);
 
   .Home_list-tasks {
     display: flex;
@@ -60,6 +62,8 @@
     padding: 0 30px;
     background: white;
     border-bottom: 1px solid black;
+    border-right: 2px solid rgb(142, 139, 181);
+    border-left: 2px solid rgb(142, 139, 181);
   }
 
   p {
@@ -73,6 +77,7 @@
     p {
       font-size: 20px;
       text-align: center;
+      cursor: pointer;
     }
   }
 
@@ -81,19 +86,15 @@
     background: white;
 
     p {
-      margin: 2px 5px;
-      padding: 5px 10px;
+      margin: 0px 8px;
       cursor: pointer;
-      border: 1px solid black;
-      border-radius: 2px;
-    }
+      background: white;
+      font-size: 25px;
+      color: rgba(30, 139, 212, 0.772);
 
-    .Home_list_tasks-edit {
-      background: wheat;
-    }
-
-    .Home_list_tasks-delete {
-      background: wheat;
+      svg {
+        background: white;
+      }
     }
   }
 }
