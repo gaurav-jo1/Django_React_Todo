@@ -12,6 +12,8 @@
   background: rgb(179, 197, 245);
   padding: 40px 80px;
   border-radius: 10px 10px 0 0;
+  box-shadow: 0px 5px 8px rgb(139, 139, 139);
+  position: sticky;
 
   input {
     background: white;
@@ -46,7 +48,52 @@
   }
 }
 
-
 .Home_List {
-    width: 540px;
+  width: 540px;
+  background: transparent;
+
+  .Home_list-tasks {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+    padding: 0 30px;
+    background: white;
+    border-bottom: 1px solid black;
+  }
+
+  p {
+    background: white;
+    color: black;
+  }
+
+  .Home_list_tasks-title {
+    background: white;
+
+    p {
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  .Home_list_tasks-button {
+    display: flex;
+    background: white;
+
+    p {
+      margin: 2px 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      border: 1px solid black;
+      border-radius: 2px;
+    }
+
+    .Home_list_tasks-edit {
+      background: wheat;
+    }
+
+    .Home_list_tasks-delete {
+      background: wheat;
+    }
+  }
 }
