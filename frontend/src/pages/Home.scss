@@ -85,14 +85,24 @@
     display: flex;
     background: white;
 
+    .Home_list_tasks-edit:hover {
+      color: #c9d936;
+    }
+
+    .Home_list_tasks-delete:hover {
+      color: red;
+    }
+
+
+
     p {
-      margin: 0px 8px;
       cursor: pointer;
       background: white;
       font-size: 25px;
       color: rgba(30, 139, 212, 0.772);
-
+      
       svg {
+        margin: 0px 8px;
         background: white;
       }
     }
