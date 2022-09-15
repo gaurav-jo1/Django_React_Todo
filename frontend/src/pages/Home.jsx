@@ -1,41 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.scss";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { BiEditAlt } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
+import client from "../react-query-client";
 
-const fetcher = () => {
-  return fetch(`http://127.0.0.1:8000/api/task-list/`).then((res) =>
-    res.json()
-  );
-};
+const fetcher = (url, body) =>
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 
 function Home() {
-  // const [todo, setTodo] = useState('')
+  const [lang, setLang] = useState("");
 
-  const { data: tasks, isLoading, isError } = useQuery(["todo-list"], () => fetcher());
+  const mutation = useMutation(
+    (body) => fetcher("http://127.0.0.1:8000/api/task-create/", body),
+    {
+      onSuccess(data) {
+        console.log("Got response from backend", data);
+        client.invalidateQueries("todos");
+        setLang(" ");
+      },
+      onError(error) {
+        console.log("Got error from backend", error);
+      },
+    }
+  );
 
-  if (isLoading) return <h2>Loading....</h2>;
+  const {
+    data: tasks,
+    isLoading,
+    isError,
+  } = useQuery(["todos"], () => {
+    return fetch("http://127.0.0.1:8000/api/task-list/").then((t) => t.json());
+  });
 
-  if (isError) return <h2>Error with request</h2>;
+  if (isLoading) return <h1>Loading...</h1>;
+
+  if (isError) return <h1>Error with request</h1>;
+
+  function callMutation() {
+    mutation.mutate({ title: lang });
+  }
 
   return (
     <div className="Home_container">
       <div className="Home_Add">
         <div className="Home_task-input">
-          <input type="text" name="todo" placeholder="Add Todo..." />
+          <input
+            type="text"
+            name="todo_title"
+            value={lang}
+            onChange={(e) => setLang(e.target.value)}
+            placeholder="Add Todo..."
+          />
         </div>
-        <div className="Home_task-post"> <input type="submit" /> </div>
+        <div className="Home_task-post">
+          {" "}
+          <button onClick={callMutation}>Submit</button>{" "}
+        </div>
       </div>
       <div className="Home_List">
         {tasks.map((task) => {
           console.log(task);
           return (
             <div className="Home_list-tasks" key={task.id}>
-              <div className="Home_list_tasks-title"> <p>{task.title}</p> </div>
+              <div className="Home_list_tasks-title">
+                {" "}
+                <p>{task.title}</p>{" "}
+              </div>
               <div className="Home_list_tasks-button">
-                <p className="Home_list_tasks-edit"> <BiEditAlt /> </p>
-                <p className="Home_list_tasks-delete"> <AiOutlineDelete /> </p>
+                <p className="Home_list_tasks-edit">
+                  {" "}
+                  <BiEditAlt />{" "}
+                </p>
+                <p className="Home_list_tasks-delete">
+                  {" "}
+                  <AiOutlineDelete />{" "}
+                </p>
               </div>
             </div>
           );
