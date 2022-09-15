@@ -27,6 +27,10 @@ function Home() {
   const [lang, setLang] = useState("");
   const [getid, setGetid] = useState("");
 
+  function deletingTodo() {
+    mutationD.mutate()
+  }
+
   const mutation = useMutation(
     (body) => fetcher("http://127.0.0.1:8000/api/task-create/", body),
     {
@@ -86,7 +90,7 @@ function Home() {
               <div className="Home_list_tasks-button">
                 <p className="Home_list_tasks-edit"> <BiEditAlt /> </p>
                 <div>
-                  <p className="Home_list_tasks-delete" onClick={() => setGetid(task.id, mutationD.mutate())} > <AiOutlineDelete /></p>
+                  <p className="Home_list_tasks-delete" onClick={() => setGetid(task.id,deletingTodo())} > <AiOutlineDelete /></p>
                 </div>
               </div>
             </div>
