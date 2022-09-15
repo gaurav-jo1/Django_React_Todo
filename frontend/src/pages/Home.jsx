@@ -27,10 +27,6 @@ function Home() {
   const [lang, setLang] = useState("");
   const [getid, setGetid] = useState("");
 
-  function deletingTodo() {
-    mutationD.mutate()
-  }
-
   const mutation = useMutation(
     (body) => fetcher("http://127.0.0.1:8000/api/task-create/", body),
     {
@@ -59,7 +55,13 @@ function Home() {
     }
   );
 
-  const { data: tasks, isLoading, isError, } = useQuery(["todos"], () => {
+  
+
+  const {
+    data: tasks,
+    isLoading,
+    isError,
+  } = useQuery(["todos"], () => {
     return fetch("http://127.0.0.1:8000/api/task-list/").then((t) => t.json());
   });
 
@@ -71,13 +73,23 @@ function Home() {
     mutation.mutate({ title: lang });
   }
 
+  function CallDeleting() {
+    mutationD.mutate()
+  }
+
+  function settingId(title_id) {
+    setGetid(title_id)
+    CallDeleting()
+  }
+
   return (
     <div className="Home_container">
       <div className="Home_Add">
         <div className="Home_task-input">
-          <input type="text" name="todo_title" value={lang} onChange={(e) => setLang(e.target.value)} placeholder="Add Todo..."/>
+          <input type="text" name="todo_title" value={lang} onChange={(e) => setLang(e.target.value)} placeholder="Add Todo..."
+          />
         </div>
-        <div className="Home_task-post">      
+        <div className="Home_task-post">
           <button onClick={callMutation}>Submit</button>
         </div>
       </div>
@@ -86,11 +98,15 @@ function Home() {
           console.log(task);
           return (
             <div className="Home_list-tasks" key={task.id}>
-              <div className="Home_list_tasks-title"> <p>{task.title}</p> </div>
+              <div className="Home_list_tasks-title">
+                <p>{task.title}</p>
+              </div>
               <div className="Home_list_tasks-button">
                 <p className="Home_list_tasks-edit"> <BiEditAlt /> </p>
                 <div>
-                  <p className="Home_list_tasks-delete" onClick={() => setGetid(task.id,deletingTodo())} > <AiOutlineDelete /></p>
+                  <p className="Home_list_tasks-delete" onClick={
+                    () => settingId(task.id  ) 
+                  }> <AiOutlineDelete /> </p>
                 </div>
               </div>
             </div>
