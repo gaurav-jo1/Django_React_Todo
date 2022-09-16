@@ -74,10 +74,11 @@
   .Home_list_tasks-title {
     background: white;
 
-    p {
+    span,strike {
       font-size: 20px;
       text-align: center;
       cursor: pointer;
+      background: white;
     }
   }
 

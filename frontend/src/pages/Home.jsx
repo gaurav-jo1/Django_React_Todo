@@ -51,7 +51,6 @@ function Home() {
       onSuccess(data) {
         console.log("Got response from backend", data);
         client.invalidateQueries("todos");
-        setLang(" ");
       },
       onError(error) {
         console.log("Got error from backend", error);
@@ -86,7 +85,7 @@ function Home() {
           console.log(task);
           return (
             <div className="Home_list-tasks" key={task.id}>
-              <div className="Home_list_tasks-title"> <p>{task.title}</p> </div>
+              <div className="Home_list_tasks-title"> {task.completed === false ? (<span>{task.title}</span>) : (<stike>{task.title}</stike>)} </div>
               <div className="Home_list_tasks-button">
                 <p className="Home_list_tasks-edit"> <BiEditAlt /> </p>
                 <div>
