@@ -25,60 +25,79 @@ const deletion = (url, body) =>
 
 function Home() {
   const [lang, setLang] = useState("");
-  const [getid, setGetid] = useState("");
+  const [getid, setGetid] = useState(null);
 
-  const mutation = useMutation( (body) => fetcher("http://127.0.0.1:8000/api/task-create/", body), {
+  
+  const { data: tasks, isLoading, isError, } = useQuery(["todos"], () => {
+    return fetch("http://127.0.0.1:8000/api/task-list/").then((t) => t.json());
+  });
+
+
+  const mutation = useMutation(
+    (body) => fetcher("http://127.0.0.1:8000/api/task-create/", body),
+    {
       onSuccess(data) {
         console.log("Got response from backend", data);
         client.invalidateQueries("todos");
-        setLang(" "); },
-      onError(error) { console.log("Got error from backend", error); }, }
+        setLang(" ");
+      },
+      onError(error) {
+        console.log("Got error from backend", error);
+      },
+    }
   );
 
-  const mutationD = useMutation( (body) => deletion(`http://127.0.0.1:8000/api/task-delete/${getid}`, body), {
+  function deleting_function() {
+    mutationD.mutate()
+  }
+
+  const mutationD = useMutation(
+    (body) => deletion(`http://127.0.0.1:8000/api/task-delete/${getid}`, body),
+    {
       onSuccess(data) {
         console.log("Got response from backend", data);
-        client.invalidateQueries("todos") },
-      onError(error) { console.log("Got error from backend", error);}, }
+        client.invalidateQueries("todos");
+      },
+      onError(error) {
+        console.log("Got error from backend", error);
+      },
+    }
   );
-
-  const { data: tasks, isLoading, isError } = useQuery(["todos"], () => {
-    return fetch("http://127.0.0.1:8000/api/task-list/").then((t) => t.json());
-    
-  });
 
   if (isLoading) return <h1>Loading...</h1>;
 
   if (isError) return <h1>Error with request</h1>;
 
-  function callMutation() { mutation.mutate({ title: lang }); }
 
-  
-  function settingId(title_id) {
-    setGetid(title_id);
-    return CallDeleting();
+  function callMutation() {
+    mutation.mutate({ title: lang });
   }
-  function CallDeleting() { mutationD.mutate(); }
-
 
   return (
     <div className="Home_container">
       <div className="Home_Add">
         <div className="Home_task-input">
-          <input type="text" name="todo_title" value={lang} onChange={(e) => setLang(e.target.value)} placeholder="Add Todo..."/>
+          <input type="text" name="todo_title" value={lang} onChange={(e) => setLang(e.target.value)} placeholder="Add Todo..." />
         </div>
-        <div className="Home_task-post"> <button onClick={callMutation}>Submit</button> </div>
+        <div className="Home_task-post">
+          <button onClick={callMutation}>Submit</button>
+        </div>
       </div>
       <div className="Home_List">
         {tasks.map((task) => {
-          console.log(task);
           return (
             <div className="Home_list-tasks" key={task.id}>
-              <div className="Home_list_tasks-title">{task.completed === false ? <span>{task.title}</span> : <strike>{task.title}</strike>  }</div>
+              <div className="Home_list_tasks-title">
+                <p>{task.title}</p>{" "}
+              </div>
               <div className="Home_list_tasks-button">
-                <p className="Home_list_tasks-edit"> <BiEditAlt /> </p>
-                <div> 
-                  <p className="Home_list_tasks-delete" onClick={() => settingId(task.id)}> <AiOutlineDelete /> </p>
+                <p className="Home_list_tasks-edit">
+                  <BiEditAlt />{" "}
+                </p>
+                <div>
+                  <p className="Home_list_tasks-delete">
+                    <AiOutlineDelete onClick={() => setGetid(task.id,deleting_function())}/>
+                  </p>
                 </div>
               </div>
             </div>
