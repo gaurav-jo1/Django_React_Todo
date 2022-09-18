@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Home.scss";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { BiEditAlt } from "react-icons/bi";
-import { AiOutlineDelete } from "react-icons/ai";
+
 import client from "../react-query-client";
+import Tasks from "./Tasks";
 
 const fetcher = (url, body) =>
   fetch(url, {
@@ -14,49 +14,20 @@ const fetcher = (url, body) =>
     body: JSON.stringify(body),
   });
 
-const deletion = (url, body) =>
-  fetch(url, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
 function Home() {
   const [lang, setLang] = useState("");
-  const [getid, setGetid] = useState(null);
+  const [postID, setPostID] = useState(null);
 
-  
-  const { data: tasks, isLoading, isError, } = useQuery(["todos"], () => {
+  const { data: tasks, isLoading, isError } = useQuery(["todos"], () => {
     return fetch("http://127.0.0.1:8000/api/task-list/").then((t) => t.json());
   });
 
-
   const mutation = useMutation(
     (body) => fetcher("http://127.0.0.1:8000/api/task-create/", body),
-    {
-      onSuccess(data) {
+    { onSuccess(data) {
         console.log("Got response from backend", data);
         client.invalidateQueries("todos");
         setLang(" ");
-      },
-      onError(error) {
-        console.log("Got error from backend", error);
-      },
-    }
-  );
-
-  function deleting_function() {
-    mutationD.mutate()
-  }
-
-  const mutationD = useMutation(
-    (body) => deletion(`http://127.0.0.1:8000/api/task-delete/${getid}`, body),
-    {
-      onSuccess(data) {
-        console.log("Got response from backend", data);
-        client.invalidateQueries("todos");
       },
       onError(error) {
         console.log("Got error from backend", error);
@@ -68,10 +39,20 @@ function Home() {
 
   if (isError) return <h1>Error with request</h1>;
 
-
   function callMutation() {
     mutation.mutate({ title: lang });
   }
+
+  if (postID !== null) {
+    return (
+      <Tasks postID={postID} backButton={backButton} />
+    );
+  }
+
+  function backButton(){
+    return setPostID(null)
+  }
+
 
   return (
     <div className="Home_container">
@@ -88,17 +69,7 @@ function Home() {
           return (
             <div className="Home_list-tasks" key={task.id}>
               <div className="Home_list_tasks-title">
-                <p>{task.title}</p>{" "}
-              </div>
-              <div className="Home_list_tasks-button">
-                <p className="Home_list_tasks-edit">
-                  <BiEditAlt />{" "}
-                </p>
-                <div>
-                  <p className="Home_list_tasks-delete">
-                    <AiOutlineDelete onClick={() => setGetid(task.id,deleting_function())}/>
-                  </p>
-                </div>
+                <a onClick={() => setPostID(task.id)} href="#0"> <p>{task.title}</p> </a>
               </div>
             </div>
           );

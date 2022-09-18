@@ -10,7 +10,7 @@
   display: flex;
   margin-top: 120px;
   background: rgb(179, 197, 245);
-  padding: 40px 80px;
+  padding: 40px 40px;
   border-radius: 10px 10px 0 0;
   box-shadow: 0px 5px 8px rgb(139, 139, 139);
   position: sticky;
@@ -26,7 +26,7 @@
   .Home_task-input {
     input {
       height: 40px;
-      width: 300px;
+      width: 380px;
       font-size: 16px;
       border-right: none;
     }
@@ -50,62 +50,29 @@
 
 .Home_List {
   width: 540px;
-  background: transparent;
   color: black;
   box-shadow: 0px 20px 50px rgb(205, 44, 44);
 
   .Home_list-tasks {
     display: flex;
-    justify-content: space-between;
     height: 60px;
     align-items: center;
+    justify-content: center;
     padding: 0 30px;
     background: white;
     border-bottom: 1px solid black;
     border-right: 2px solid rgb(142, 139, 181);
     border-left: 2px solid rgb(142, 139, 181);
+
+    p {
+      background: white;
+      font-size: 18px;
+      color: black;
+    }
   }
 
-  p {
-    background: white;
-    color: black;
-  }
 
   .Home_list_tasks-title {
     background: white;
-
-    span,strike {
-      font-size: 20px;
-      text-align: center;
-      cursor: pointer;
-      background: white;
-    }
-  }
-
-  .Home_list_tasks-button {
-    display: flex;
-    background: white;
-
-    .Home_list_tasks-edit:hover {
-      color: #c9d936;
-    }
-
-    .Home_list_tasks-delete:hover {
-      color: red;
-    }
-
-
-
-    p {
-      cursor: pointer;
-      background: white;
-      font-size: 25px;
-      color: rgba(30, 139, 212, 0.772);
-      
-      svg {
-        margin: 0px 8px;
-        background: white;
-      }
-    }
   }
 }
