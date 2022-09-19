@@ -6,6 +6,15 @@ import "./Tasks.scss";
 
 import client from "../react-query-client";
 
+const fetcherr = (url, body) =>
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
 const deletion = (url, body) =>
   fetch(url, {
     method: "DELETE",
@@ -18,6 +27,8 @@ const deletion = (url, body) =>
 const Tasks = ({ postID, backButton, postTitle }) => {
   const [titlee, setTitlee] = useState(postTitle)
 
+  console.log(titlee)
+
   const { data: taskDetail, isLoading, isError, } = useQuery(["todo"], () => {
     return fetch(`http://127.0.0.1:8000/api/task-detail/${postID}`).then((t) =>
       t.json()
@@ -25,7 +36,19 @@ const Tasks = ({ postID, backButton, postTitle }) => {
   });
 
   const mutationD = useMutation(
-    (body) => deletion(`http://127.0.0.1:8000/api/task-delete/${postID}`, body),
+    (body) => deletion(`http://127.0.0.1:8000/api/task-delete/${postID}/`, body),
+    {
+      onSuccess(data) {
+        console.log("Got response from backend", data);
+        client.invalidateQueries("todos");
+      },
+      onError(error) {
+        console.log("Got error from backend", error);
+      },
+    }
+  );
+  const mutationU = useMutation(
+    (body) => fetcherr(`http://127.0.0.1:8000/api/task-update/${postID}/`, body),
     {
       onSuccess(data) {
         console.log("Got response from backend", data);
@@ -46,7 +69,10 @@ const Tasks = ({ postID, backButton, postTitle }) => {
     backButton();
   }
 
-
+  function callMutationU(){
+    mutationU.mutate({title: titlee})
+    backButton()
+  }
 
   return (
     <div className="Task_Container">
@@ -56,7 +82,7 @@ const Tasks = ({ postID, backButton, postTitle }) => {
         </div>
         <div className="Task_heading">
           <input type="text" name="todo_title_id" value={titlee} onChange={(a) => setTitlee(a.target.value)} placeholder={taskDetail.title}  />
-          <button>Update</button>
+          <button onClick={() => callMutationU()}>Update</button>
         </div>
         <div className="Task_controls">
           <p onClick={() => deleting_task()} className="delete_container">
