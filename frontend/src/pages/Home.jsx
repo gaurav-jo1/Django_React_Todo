@@ -17,6 +17,8 @@ const fetcher = (url, body) =>
 function Home() {
   const [lang, setLang] = useState("");
   const [postID, setPostID] = useState(null);
+  const [postTitle, setPostTitle] = useState(null)
+  
 
   const { data: tasks, isLoading, isError } = useQuery(["todos"], () => {
     return fetch("http://127.0.0.1:8000/api/task-list/").then((t) => t.json());
@@ -45,12 +47,17 @@ function Home() {
 
   if (postID !== null) {
     return (
-      <Tasks postID={postID} backButton={backButton} />
+      <Tasks postID={postID} backButton={backButton} postTitle={postTitle} />
     );
   }
 
   function backButton(){
     return setPostID(null)
+  }
+
+  function settingPost(task){
+    setPostID(task.id)
+    setPostTitle(task.title)
   }
 
 
@@ -69,7 +76,7 @@ function Home() {
           return (
             <div className="Home_list-tasks" key={task.id}>
               <div className="Home_list_tasks-title">
-                <a onClick={() => setPostID(task.id)} href="#0"> <p>{task.title}</p> </a>
+                <a onClick={() => settingPost(task)} href="#0"> <p>{task.title}</p> </a>
               </div>
             </div>
           );

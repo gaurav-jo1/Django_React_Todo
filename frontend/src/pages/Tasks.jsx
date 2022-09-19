@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React,{useState} from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import {GiTireIronCross} from "react-icons/gi"
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -15,13 +15,10 @@ const deletion = (url, body) =>
     body: JSON.stringify(body),
   });
 
-const Tasks = ({ postID, backButton }) => {
-  const [todoTitle, setTodoTitle] = useState("")
-  const {
-    data: task_detail,
-    isLoading,
-    isError,
-  } = useQuery(["todo"], () => {
+const Tasks = ({ postID, backButton, postTitle }) => {
+  const [titlee, setTitlee] = useState(postTitle)
+
+  const { data: taskDetail, isLoading, isError, } = useQuery(["todo"], () => {
     return fetch(`http://127.0.0.1:8000/api/task-detail/${postID}`).then((t) =>
       t.json()
     );
@@ -50,6 +47,7 @@ const Tasks = ({ postID, backButton }) => {
   }
 
 
+
   return (
     <div className="Task_Container">
       <div className="Task_div">
@@ -57,7 +55,8 @@ const Tasks = ({ postID, backButton }) => {
           <span> <GiTireIronCross /> </span>
         </div>
         <div className="Task_heading">
-          <textarea type="text" name="todo_title_id" value={task_detail.title} onChange={(e) => setTodoTitle(e.target.value)} />
+          <input type="text" name="todo_title_id" value={titlee} onChange={(a) => setTitlee(a.target.value)} placeholder={taskDetail.title}  />
+          <button>Update</button>
         </div>
         <div className="Task_controls">
           <p onClick={() => deleting_task()} className="delete_container">
