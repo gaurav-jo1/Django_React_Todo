@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 
 import client from "../react-query-client";
 import Tasks from "./Tasks";
+import Completed from "./Completed";
 
 const fetcher = (url, body) =>
   fetch(url, {
@@ -61,6 +62,9 @@ function Home() {
   }
 
 
+  
+
+
   return (
     <div className="Home_container">
       <div className="Home_Add">
@@ -71,12 +75,16 @@ function Home() {
           <button onClick={callMutation}>Submit</button>
         </div>
       </div>
+        {console.log(tasks)}
       <div className="Home_List">
         {tasks.map((task) => {
           return (
             <div className="Home_list-tasks" key={task.id}>
               <div className="Home_list_tasks-title">
-                <a onClick={() => settingPost(task)} href="#0"> <p>{task.title}</p> </a>
+                <a onClick={() => settingPost(task)} href="#0"> {task.completed ? <strike>{task.title}</strike> : <p>{task.title}</p>} </a>
+              </div>
+              <div>
+                <Completed complete={task.completed} taskId={task.id} taskTitle={task.title} />
               </div>
             </div>
           );

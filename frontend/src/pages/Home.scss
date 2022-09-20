@@ -57,20 +57,19 @@
     display: flex;
     height: 60px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 0 30px;
     background: white;
     border-bottom: 1px solid black;
     border-right: 2px solid rgb(142, 139, 181);
     border-left: 2px solid rgb(142, 139, 181);
 
-    p {
+    p,strike {
       background: white;
-      font-size: 18px;
+      font-size: 20px;
       color: black;
     }
   }
-
 
   .Home_list_tasks-title {
     background: white;

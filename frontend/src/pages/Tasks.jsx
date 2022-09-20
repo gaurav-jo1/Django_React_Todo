@@ -27,8 +27,6 @@ const deletion = (url, body) =>
 const Tasks = ({ postID, backButton, postTitle }) => {
   const [titlee, setTitlee] = useState(postTitle)
 
-  console.log(titlee)
-
   const { data: taskDetail, isLoading, isError, } = useQuery(["todo"], () => {
     return fetch(`http://127.0.0.1:8000/api/task-detail/${postID}`).then((t) =>
       t.json()
