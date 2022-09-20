@@ -3,21 +3,13 @@ import "./Completed.scss";
 import { useMutation } from "@tanstack/react-query";
 import client from "../react-query-client";
 
-const fetcherr = (url, body) =>
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
 
-const Completed = ({ complete, taskId,taskTitle }) => {
+const Completed = ({ complete, taskId,taskTitle, fetcher }) => {
   const [isDone, setIsDone] = useState(complete);
 
   const mutationC = useMutation(
     (body) =>
-      fetcherr(`http://127.0.0.1:8000/api/task-update/${taskId}/`, body),
+    fetcher(`http://127.0.0.1:8000/api/task-update/${taskId}/`, body),
     {
       onSuccess(data) {
         console.log("Got response from backend", data);
@@ -29,7 +21,7 @@ const Completed = ({ complete, taskId,taskTitle }) => {
     }
   );
 
-  const handleChange = (event) => {
+  const handleChange = () => {
     if (isDone === false) {
       mutationC.mutate({  title:taskTitle,completed: true });
     } else {

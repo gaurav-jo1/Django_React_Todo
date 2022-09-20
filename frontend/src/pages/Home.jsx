@@ -48,7 +48,7 @@ function Home() {
 
   if (postID !== null) {
     return (
-      <Tasks postID={postID} backButton={backButton} postTitle={postTitle} />
+      <Tasks postID={postID} backButton={backButton} postTitle={postTitle} fetcher={fetcher}/>
     );
   }
 
@@ -84,7 +84,7 @@ function Home() {
                 <a onClick={() => settingPost(task)} href="#0"> {task.completed ? <strike>{task.title}</strike> : <p>{task.title}</p>} </a>
               </div>
               <div>
-                <Completed complete={task.completed} taskId={task.id} taskTitle={task.title} />
+                <Completed complete={task.completed} taskId={task.id} taskTitle={task.title} fetcher={fetcher} />
               </div>
             </div>
           );

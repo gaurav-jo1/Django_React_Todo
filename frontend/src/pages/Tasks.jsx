@@ -6,14 +6,6 @@ import "./Tasks.scss";
 
 import client from "../react-query-client";
 
-const fetcherr = (url, body) =>
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
 
 const deletion = (url, body) =>
   fetch(url, {
@@ -24,7 +16,7 @@ const deletion = (url, body) =>
     body: JSON.stringify(body),
   });
 
-const Tasks = ({ postID, backButton, postTitle }) => {
+const Tasks = ({ postID, backButton, postTitle, fetcher }) => {
   const [titlee, setTitlee] = useState(postTitle)
 
   const { data: taskDetail, isLoading, isError, } = useQuery(["todo"], () => {
@@ -46,7 +38,7 @@ const Tasks = ({ postID, backButton, postTitle }) => {
     }
   );
   const mutationU = useMutation(
-    (body) => fetcherr(`http://127.0.0.1:8000/api/task-update/${postID}/`, body),
+    (body) => fetcher(`http://127.0.0.1:8000/api/task-update/${postID}/`, body),
     {
       onSuccess(data) {
         console.log("Got response from backend", data);
