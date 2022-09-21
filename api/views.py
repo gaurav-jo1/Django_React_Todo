@@ -9,16 +9,9 @@ from .models import Task
 # Create your views here.
 
 # Links overview
-@api_view(['GET'])
-def apiOverview(request):
-    api_urls = {
-        'List': '/task-list/',
-        'Detail Views': '/task-detail/<str:pk>/',
-        'Create': '/task-create/',
-        'Update': '/task-update/<str:pk>/',
-        'Delete': '/task-delete/<str:pk>/',
-    }
-    return Response(api_urls)
+def front(request):
+    context = { }
+    return render(request, "index.html", context)
 
 # GET
 @api_view(['GET'])

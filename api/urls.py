@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.apiOverview, name='api-overview'),
+    path('', views.front, name='front'),
     path('task-list/', views.taskList, name='taskList'),
     path('task-detail/<str:pk>/',views.taskDetail, name='taskDetail'),
     path('task-create/', views.taskCreate, name='taskCreate'),
