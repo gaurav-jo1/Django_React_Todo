@@ -13,30 +13,30 @@
     border-radius: 15px;
 
     .Task_cross {
+      display: flex;
+      justify-content: flex-end;
+      background: white;
+      margin-top: 10px;
+      margin-right: 20px;
+
+      p {
         background: white;
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 10px;
-        margin-right: 20px;
-
+        font-size: 20px;
         &:hover {
-            cursor: pointer;
+          cursor: pointer;
         }
+      }
 
-        span {
-            background: white;
-            font-size: 20px;
-        }
 
-        svg {
-            background: white;
-        }
+      svg {
+        background: white;
+      }
     }
   }
 
   .Task_heading {
-    padding: 0 40px;
     display: flex;
+    padding: 0 40px;
     margin-top: 10px;
     flex-direction: column;
     background: white;
@@ -60,7 +60,6 @@
       margin-top: 10px;
       height: 35px;
       border: 1px solid black;
-    //   border-bottom: none;
       &:hover {
         cursor: pointer;
         background: rgb(28, 184, 137);
@@ -70,18 +69,18 @@
 }
 
 .Task_controls {
-    padding: 0 40px;
   display: flex;
   justify-content: space-between;
+  padding: 0 40px;
   width: 100%;
   background: white;
   margin-top: 3px;
 
   p {
-    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: white;
     width: 100%;
     height: 30px;
     &:hover {
