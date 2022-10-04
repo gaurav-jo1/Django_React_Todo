@@ -1,6 +1,6 @@
 # How to Get Started
 
-After cloning the project. 
+After cloning the project- ```git clone https://github.com/Gaurav-jo1/Django_React_Todo.git```
 
 ## Install Python on your system- [Python Download](https://www.python.org/downloads/)
 
