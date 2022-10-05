@@ -10,7 +10,7 @@ Install Django
 Install Django Rest Framework
 ```pip install djangorestframework```
 
-Install Cord Headers
+Install Cors Headers
 ```pip install django-cors-headers```
 
 After Installing all the packages
