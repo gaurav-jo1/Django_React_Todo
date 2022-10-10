@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios"
 
 // Client from React-Query v4
 import client from "../react-query-client";
@@ -13,7 +14,7 @@ const Completed = ({ complete, taskId, taskTitle, fetcher }) => {
 
   // POST request for Updating checkbox
   const mutationC = useMutation(
-    (body) => fetcher(`http://127.0.0.1:8000/api/task-update/${taskId}/`, body),
+    (body) => axios.post(`http://127.0.0.1:8000/api/task-update/${taskId}/`, body),
     {
       onSuccess(data) {
         console.log("Got response from backend", data);
