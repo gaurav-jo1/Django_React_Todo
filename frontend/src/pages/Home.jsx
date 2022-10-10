@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from "axios"
 
 // Client from React-Query v4
 import client from "../react-query-client";
@@ -27,12 +28,12 @@ function Home() {
 
   //  Request for GET information
   const { data: tasks, isLoading, isError,} = useQuery(["todos"], () => {
-    return fetch("http://127.0.0.1:8000/api/task-list/").then((t) => t.json());
+    return fetch('http://127.0.0.1:8000/api/task-list/').then((t) => t.json());
   });
 
   // POST request to the server
   const mutation = useMutation(
-    (body) => fetcher("http://127.0.0.1:8000/api/task-create/", body),
+    (body) => axios.post("http://127.0.0.1:8000/api/task-create/", body),
     {
       onSuccess(data) {
         console.log("Got response from backend", data);

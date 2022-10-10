@@ -10,15 +10,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 // Styling
 import "./Tasks.scss";
-
-const deletion = (url, body) =>
-  fetch(url, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+import axios from "axios";
 
 const Tasks = ({ postID, backButton, postTitle, fetcher }) => {
   const [titlee, setTitlee] = useState(postTitle);
@@ -33,7 +25,7 @@ const Tasks = ({ postID, backButton, postTitle, fetcher }) => {
   // Post a request for deleting a task
   const mutationD = useMutation(
     (body) =>
-      deletion(`http://127.0.0.1:8000/api/task-delete/${postID}/`, body),
+      axios.delete(`http://127.0.0.1:8000/api/task-delete/${postID}/`, body),
     {
       onSuccess(data) {
         console.log("Got response from backend", data);
@@ -47,7 +39,7 @@ const Tasks = ({ postID, backButton, postTitle, fetcher }) => {
 
   // POST request for Updating Task
   const mutationU = useMutation(
-    (body) => fetcher(`http://127.0.0.1:8000/api/task-update/${postID}/`, body),
+    (body) => axios.post(`http://127.0.0.1:8000/api/task-update/${postID}/`, body),
     {
       onSuccess(data) {
         console.log("Got response from backend", data);
